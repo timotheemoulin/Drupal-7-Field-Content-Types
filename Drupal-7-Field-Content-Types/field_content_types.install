@@ -1,0 +1,15 @@
+<?php
+/**
+* Implements of hook_field_schema().
+*/
+function field_content_types_field_schema($field)
+{
+    $schema = array();
+    $schema['columns']['option'] = array(
+        'type' => 'varchar',
+        'length' => 25,
+        'not null' => FALSE
+    );
+    return $schema;
+
+}

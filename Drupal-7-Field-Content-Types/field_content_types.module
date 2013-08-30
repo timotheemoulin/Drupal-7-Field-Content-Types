@@ -1,0 +1,61 @@
+<?php
+/**
+* Implements of hook_field_schema().
+*/
+function field_content_types_field_info()
+{
+    return array(
+        'field_content_types' => array(
+            'label' => t('Types de contenu'),
+            'description' => t('Affiche les types de contenu.'),
+            'settings' => array('max_length' => 255),
+            'instance_settings' => array(
+                'text_processing' => 0,
+            ),
+            'default_widget' => 'options_select',
+            'default_formatter' => 'states_field_options',
+        ),
+    );
+}
+
+function field_content_types_field_widget_info_alter(&$info)
+{
+    $widgets = array(
+        'options_select' => array('field_content_types'),
+    );
+
+    foreach ($widgets as $widget => $field_types)
+    {
+        $info[$widget]['field types'] = array_merge($info[$widget]['field types'], $field_types);
+    }
+}
+
+function field_content_types_element_validate($element, &$form_state)
+{
+    switch ($element['#type'])
+    {
+        case 'checkboxes':
+            if (empty($element['#value'])) {
+                form_error($element, t('You must give at least one role access to this state.'));
+            }
+            break;
+    }
+}
+
+function field_content_types_options_list($field, $instance, $entity_type, $entity)
+{
+    $options = array();
+    $option['all'] = t('Toutes les sections');
+
+    foreach(node_type_get_names() as $machineName => $humanName)
+    {
+        $options[$machineName] = $humanName;
+    }
+
+    return $options;
+}
+
+function field_content_types_field_is_empty()
+{
+    return false;
+}

@@ -1,0 +1,9 @@
+name = Field Content Types
+description = Champ permettant de sélectionner un type de contenu
+package = 'timothee moulin'
+core = 7.x
+
+version = "7.x-1.0"
+core = "7.x"
+datestamp = "1377769676"
+
